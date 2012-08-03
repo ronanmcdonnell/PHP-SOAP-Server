@@ -1,0 +1,45 @@
+<?xml version="1.0"?>
+<definitions name="namespace" 
+	targetNamespace="urn:namespace" 
+	xmlns:typens="urn:namespace"
+	xmlns:xsd="http://www.w3.org/2001/XMLSchema" 
+	xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/"
+	xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" 
+	xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/"
+	xmlns="http://schemas.xmlsoap.org/wsdl/">
+<message name="savedataInput">
+	<part name="data" type="xsd:int" />
+</message>
+
+<message name="savedataOutput">
+	<part name="return" type="xsd:int" />
+</message>
+
+
+<portType name="savedataPortType">
+	<operation name="savedata">
+		<input message="typens:savedataInput" />
+		<output message="typens:savedataOutput" />
+	</operation>
+		
+</portType>
+
+<binding name="savedataBinding" type="typens:savedataPortType">
+	<soap:binding style="rpc" transport="http://schemas.xmlsoap.org/soap/http" />
+	<operation name="savedata">
+		<soap:operation soapAction="http://domain.com/SaveData" />
+		<input>
+			<soap:body use="literal" namespace="urn:namespace"/>
+		</input>
+		<output>
+			<soap:body use="literal" namespace="urn:namespace"/>
+		</output>
+	</operation>
+</binding>
+
+<service name="savedataService">
+	<port name="savedataPort" binding="typens:savedataBinding">
+		<soap:address location="http://domain.com/SoapServer.php" />
+	</port>
+</service>
+</definitions>
